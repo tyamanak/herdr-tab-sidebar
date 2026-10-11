@@ -1,0 +1,79 @@
+id = "tyamanak.tab-sidebar"
+name = "Tab Sidebar"
+version = "0.1.0"
+min_herdr_version = "0.9.1"
+description = "List agent tabs vertically in the Agents panel, grouped by workspace in Spaces order"
+platforms = ["macos", "linux"]
+
+# python3 is looked up on the PATH of the Herdr server, which need not match
+# an interactive shell's. main.py needs Python 3.9 or later.
+
+[[startup]]
+command = ["python3", "main.py", "event"]
+
+[[actions]]
+id = "apply"
+title = "Tab Sidebar: apply"
+description = "Add the Agents row layout to config.toml and show tabs grouped by workspace"
+command = ["python3", "main.py", "apply"]
+
+[[actions]]
+id = "release"
+title = "Tab Sidebar: release"
+description = "Remove the row layout, the view and every token, restoring the standard Agents panel"
+command = ["python3", "main.py", "release"]
+
+[[actions]]
+id = "resync"
+title = "Tab Sidebar: resync"
+description = "Rewrite the view and every token from the current session"
+command = ["python3", "main.py", "resync"]
+
+[[actions]]
+id = "status"
+title = "Tab Sidebar: status"
+description = "Report whether the plugin is applied or released; changes nothing"
+command = ["python3", "main.py", "status"]
+
+# Workspace order comes from Herdr's own workspace_order sort, so moving or
+# reordering workspaces needs no hook.
+
+[[events]]
+on = "workspace.renamed"
+command = ["python3", "main.py", "event"]
+
+[[events]]
+on = "tab.created"
+command = ["python3", "main.py", "event"]
+
+[[events]]
+on = "tab.closed"
+command = ["python3", "main.py", "event"]
+
+[[events]]
+on = "tab.renamed"
+command = ["python3", "main.py", "event"]
+
+[[events]]
+on = "tab.moved"
+command = ["python3", "main.py", "event"]
+
+[[events]]
+on = "pane.closed"
+command = ["python3", "main.py", "event"]
+
+[[events]]
+on = "pane.moved"
+command = ["python3", "main.py", "event"]
+
+[[events]]
+on = "pane.exited"
+command = ["python3", "main.py", "event"]
+
+[[events]]
+on = "pane.agent_detected"
+command = ["python3", "main.py", "event"]
+
+[[events]]
+on = "pane.agent_status_changed"
+command = ["python3", "main.py", "event"]
