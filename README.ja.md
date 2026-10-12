@@ -2,14 +2,14 @@
 
 [English](README.md) | 日本語
 
-サイドバーの Agents パネルを縦型のタブ一覧に変える [Herdr](https://herdr.dev) プラグインです。エージェントのいるタブを 1 つにつき 1 行で表示し、ワークスペースごとの見出しの下にまとめます。
+サイドバーの Agents パネルを縦型のタブ一覧に変える [Herdr](https://herdr.dev) プラグインです。エージェントがいるタブを 1 行ずつ表示し、ワークスペースごとの見出しの下にまとめます。
 
 ![エージェントのタブをワークスペースごとにまとめて表示した Agents パネル](docs/demo.svg)
 
-この画像は、`demo/run.py --svg` で描いた架空のセッションです。[デモ](docs/internals.ja.md#デモ)を参照してください。
+この画像は、`demo/run.py --svg` で生成した架空のセッションです。[デモ](docs/internals.ja.md#デモ)を参照してください。
 
-- ワークスペースは Spaces パネルの順（自分で並べた順）に、タブはタブバーの順に並びます。
-- 複数のエージェントがいるタブも 1 行です。`+1` は自分の行を持たないエージェントの数で、その後ろの `!` は、そのうちのどれかが blocked か done の状態であることを表します。
+- ワークスペースは Spaces パネルの順（自分で並べた順）、タブはタブバーの順に並びます。
+- 複数のエージェントがいるタブも 1 行で表示されます。`+1` は個別の行を持たないエージェントの数で、末尾の `!` はそのいずれかが blocked か done の状態であることを示します。
 - 行を選択すると、そのタブの代表ペインにフォーカスが移ります。
 
 ## 動作要件
@@ -25,11 +25,11 @@ herdr plugin install tyamanak/herdr-tab-sidebar
 herdr plugin action invoke tyamanak.tab-sidebar.apply
 ```
 
-インストールしただけでは、目に見える変化はありません。`apply` が行のレイアウトを `config.toml` に追加し、設定を再読み込みして、行の中身を埋めます。
+インストールしただけでは画面に変化はありません。`apply` が行レイアウトを `config.toml` に追加し、設定を再読み込みして行の内容を表示します。
 
-`config.toml` を自分で編集する必要はありません。`apply` がファイルの末尾に 8 行を追記し、`release` がその 8 行を取り除いて、ファイルを元どおりに戻します。変更のたびに、古いファイルのコピーを残します。
+`config.toml` を手作業で編集する必要はありません。`apply` がファイルの末尾に 8 行追記し、`release` がその 8 行を取り除いて元に戻します。変更のたびに、古いファイルのコピーを残します。
 
-例外は 1 つだけです。`config.toml` がすでに `[ui.sidebar.agents]` を定義している場合、`apply` は拒否して何も変更しません。自分の定義を削除するかコメントアウトしてから `apply` を実行してください。[変更する内容](docs/config.ja.md#変更する内容)を参照してください。
+唯一の例外として、`config.toml` にすでに `[ui.sidebar.agents]` が定義されている場合、`apply` は拒否して何も変更しません。自分の定義を削除するかコメントアウトしてから `apply` を実行してください。[変更する内容](docs/config.ja.md#変更する内容)を参照してください。
 
 ## アンインストール
 
@@ -41,7 +41,7 @@ herdr plugin action invoke tyamanak.tab-sidebar.apply
    herdr plugin action invoke tyamanak.tab-sidebar.release
    ```
 
-2. 状態を問い合わせ、少し待ってから、ログで答えを読みます。
+2. 状態を問い合わせ、少し待ってからログで結果を確認します。
 
    ```sh
    herdr plugin action invoke tyamanak.tab-sidebar.status
@@ -59,15 +59,15 @@ herdr plugin action invoke tyamanak.tab-sidebar.apply
    herdr plugin uninstall tyamanak.tab-sidebar
    ```
 
-プラグインの行を `config.toml` から自分で取り除く場合は、[手作業で取り除く](docs/config.ja.md#手作業で取り除く)を参照してください。
+プラグインの行を `config.toml` から手作業で取り除く場合は、[手作業で取り除く](docs/config.ja.md#手作業で取り除く)を参照してください。
 
 ## 制限
 
-- エージェントのいないタブには行がありません。Herdr が一覧に出すのは、エージェントが動いているペインだけです。
+- エージェントのいないタブには行がありません。Herdr が一覧に表示するのは、エージェントが動いているペインのみです。
 - 複数のエージェントがいるタブのほかのエージェントには、プラグインの適用中、次/前のエージェントへの移動ではたどり着けません。
-- 適用中は、プラグインが、Herdr 自身による Agents パネルの並び順と、Herdr の Agent ビューを置き換えます。ビューを設定する別のプラグインとの併用は試していません。
+- 適用中は、プラグインが Herdr 自身による Agents パネルの並び順と、Herdr の Agent ビューを置き換えます。ビューを設定する別のプラグインとの併用は試していません。
 
-すべての項目は[制限](docs/usage.ja.md#制限)にあります。
+すべての項目は[制限](docs/usage.ja.md#制限)に記載されています。
 
 ## ドキュメント
 

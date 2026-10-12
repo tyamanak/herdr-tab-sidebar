@@ -2,26 +2,26 @@
 
 English | [Japanese](README.ja.md)
 
-A [Herdr](https://herdr.dev) plugin that turns the Agents panel of the sidebar
-into a vertical tab list: one row per tab that has an agent, grouped under a
-heading per workspace.
+A [Herdr](https://herdr.dev) plugin that turns the sidebar's Agents panel into
+a vertical tab list: one row per tab with an agent, grouped under a heading
+per workspace.
 
 ![The Agents panel listing agent tabs grouped by workspace](docs/demo.svg)
 
 The picture is a made-up session drawn by `demo/run.py --svg`; see
 [Demo](docs/internals.md#demo).
 
-- Workspaces come in the order of the Spaces panel (your own order), tabs in
-  the order of the tab bar.
-- A tab with several agents is one row. `+1` counts the agents that have no
-  row of their own, and `!` after it means one of those is blocked or done.
+- Workspaces follow the order of the Spaces panel (your own order), and tabs
+  follow the order of the tab bar.
+- A tab with several agents is one row. `+1` counts the agents without their
+  own row, and a trailing `!` means one of them is blocked or done.
 - Selecting a row focuses that tab's representative pane.
 
 ## Requirements
 
 - Herdr 0.9.1 or later.
-- Python 3.9 or later, found as `python3` on the PATH of the Herdr server.
-- macOS or Linux. On Linux nothing has been tried by hand yet.
+- Python 3.9 or later, available as `python3` on the Herdr server's PATH.
+- macOS or Linux. Linux has not been tested manually yet.
 
 ## Install
 
@@ -30,22 +30,22 @@ herdr plugin install tyamanak/herdr-tab-sidebar
 herdr plugin action invoke tyamanak.tab-sidebar.apply
 ```
 
-Installing changes nothing you can see. `apply` adds the row layout to
-`config.toml`, reloads the config and fills in the rows.
+Installing makes no visible changes on its own. `apply` adds the row layout
+to `config.toml`, reloads the config, and populates the rows.
 
-You do not have to edit `config.toml` yourself. `apply` appends 8 lines to the
-end of the file, and `release` removes them and leaves the file as it was. A
-copy of the old file is kept on every change.
+You do not have to edit `config.toml` manually. `apply` appends 8 lines to the
+end of the file, and `release` removes them to restore it. A backup of the old
+file is kept on every change.
 
-The one exception: if `config.toml` already defines `[ui.sidebar.agents]`,
-`apply` refuses and changes nothing. Remove or comment out yours, then run
+One exception: if `config.toml` already defines `[ui.sidebar.agents]`, `apply`
+refuses and changes nothing. Remove or comment out your section, then run
 `apply`. See [What it changes](docs/config.md#what-it-changes).
 
 ## Uninstall
 
-Release first, and uninstall only once the release is confirmed. Actions run
-in the background: `invoke` returns before the action has finished, so these
-are three separate steps, not one block to paste.
+Release first, and only uninstall after confirming the release. Because actions
+run in the background and `invoke` returns before they finish, run these as
+three separate steps rather than pasting them all at once.
 
 1. Release:
 
@@ -53,7 +53,7 @@ are three separate steps, not one block to paste.
    herdr plugin action invoke tyamanak.tab-sidebar.release
    ```
 
-2. Ask for the state, wait a moment, and read the answer in the log:
+2. Check the status, wait a moment, and read the result in the log:
 
    ```sh
    herdr plugin action invoke tyamanak.tab-sidebar.status
@@ -63,7 +63,7 @@ are three separate steps, not one block to paste.
    herdr plugin log list --plugin tyamanak.tab-sidebar
    ```
 
-   Go on when the newest `status` entry ends with `state: released`. If it
+   Proceed once the newest `status` entry ends with `state: released`. If it
    does not, see
    [When the release does not finish](docs/config.md#when-the-release-does-not-finish).
 
@@ -73,19 +73,19 @@ are three separate steps, not one block to paste.
    herdr plugin uninstall tyamanak.tab-sidebar
    ```
 
-To remove the plugin's lines from `config.toml` yourself, see
+To remove the plugin's lines from `config.toml` manually, see
 [Removing it by hand](docs/config.md#removing-it-by-hand).
 
 ## Limits
 
-- Tabs without an agent have no row. Herdr only lists panes that run an agent.
-- The other agents of a tab with several agents cannot be reached with
+- Tabs without an agent have no row: Herdr only lists panes running an agent.
+- In tabs with multiple agents, the other agents cannot be reached with
   next/previous agent while the plugin is applied.
 - While applied, the plugin replaces Herdr's own ordering of the Agents panel
-  and Herdr's Agent view. Using it next to another plugin that sets the view
+  and Herdr's Agent view. Using it alongside another plugin that sets the view
   has not been tried.
 
-The full list is in [Limits](docs/usage.md#limits).
+See [Limits](docs/usage.md#limits) for the full list.
 
 ## Documentation
 
