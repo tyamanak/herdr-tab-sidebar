@@ -1,5 +1,7 @@
 # herdr-tab-sidebar
 
+English | [Japanese](README.ja.md)
+
 A [Herdr](https://herdr.dev) plugin that turns the Agents panel of the sidebar
 into a vertical tab list: one row per tab that has an agent, grouped under a
 heading per workspace.
