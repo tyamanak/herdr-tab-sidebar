@@ -21,7 +21,7 @@ herdr plugin action invoke tyamanak.tab-sidebar.status
 herdr plugin log list --plugin tyamanak.tab-sidebar
 ```
 
-ログの最新の `status` のエントリーの最後の行を確認してください。`state: applied` か `state: released`、またはそのどちらかになるのを妨げている原因が出力されます。アクションはバックグラウンドで動作するため、出力やエラーは呼び出した端末ではなくプラグインログに残ります。
+ログの最新の `status` のエントリーの最後の行を確認してください。`state: applied` か `state: released`、またはそのどちらかになるのを妨げている原因が出力されます。アクションはバックグラウンドで動作するため、出力やエラーは呼び出した端末ではなくプラグインログに残ります。エントリーが実行中で結果が出ていない場合は、少し待ってからログを再度確認してください。
 
 このリポジトリのクローンからは、終了コードを返す 1 つのコマンドで同じ確認を行えます。
 

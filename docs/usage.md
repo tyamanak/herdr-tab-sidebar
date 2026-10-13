@@ -30,7 +30,8 @@ herdr plugin log list --plugin tyamanak.tab-sidebar
 Look at the last line of the newest `status` entry in the log. It is
 `state: applied`, `state: released`, or whatever is blocking either. Because
 actions run in the background, their output and errors appear in the plugin
-log, not in the terminal that invoked them.
+log, not in the terminal that invoked them. If the entry is still running
+without a result, wait a moment and read the log again.
 
 From a clone of this repository, you can run the same check with a single
 command and an exit code:
