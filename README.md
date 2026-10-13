@@ -30,44 +30,34 @@ herdr plugin install tyamanak/herdr-tab-sidebar
 herdr plugin action invoke tyamanak.tab-sidebar.apply
 ```
 
-Installing makes no visible changes on its own. `apply` adds the row layout
-to `config.toml`, reloads the config, and populates the rows.
+This rewrites `config.toml`, adding `[ui.sidebar.agents]`.
 
-You do not have to edit `config.toml` manually. `apply` appends 8 lines to the
-end of the file, and `release` removes them to restore it. A backup of the old
-file is kept on every change.
-
-One exception: if `config.toml` already defines `[ui.sidebar.agents]`, `apply`
-refuses and changes nothing. Remove or comment out your section, then run
-`apply`. See [What it changes](docs/config.md#what-it-changes).
+If `[ui.sidebar.agents]` is already defined, nothing is changed. Remove or
+comment out your definition and then run `apply`, or see
+[What it changes](docs/config.md#what-it-changes).
 
 ## Uninstall
 
-Release first, and only uninstall after confirming the release. Because actions
-run in the background and `invoke` returns before they finish, run these as
-three separate steps rather than pasting them all at once.
+Run the following steps in order.
 
-1. Release:
+1. Release the plugin
 
    ```sh
    herdr plugin action invoke tyamanak.tab-sidebar.release
    ```
 
-2. Check the status, wait a moment, and read the result in the log:
+2. Check the state
 
    ```sh
    herdr plugin action invoke tyamanak.tab-sidebar.status
-   ```
-
-   ```sh
    herdr plugin log list --plugin tyamanak.tab-sidebar
    ```
 
-   Proceed once the newest `status` entry ends with `state: released`. If it
-   does not, see
+   Make sure the newest `status` entry ends with `state: released` before
+   going on. If it does not become `released`, see
    [When the release does not finish](docs/config.md#when-the-release-does-not-finish).
 
-3. Uninstall:
+3. Uninstall
 
    ```sh
    herdr plugin uninstall tyamanak.tab-sidebar
@@ -78,7 +68,7 @@ To remove the plugin's lines from `config.toml` manually, see
 
 ## Limits
 
-- Tabs without an agent have no row: Herdr only lists panes running an agent.
+- Tabs without an agent, such as shells, are not listed.
 - In tabs with multiple agents, the other agents cannot be reached with
   next/previous agent while the plugin is applied.
 - While applied, the plugin replaces Herdr's own ordering of the Agents panel

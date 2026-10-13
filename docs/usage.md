@@ -67,8 +67,8 @@ herdr plugin install tyamanak/herdr-tab-sidebar
 
 ## Limits
 
-- Tabs without an agent are not listed. Herdr only lists panes running an
-  agent, so a tab with only shells has no row.
+- Tabs without an agent, such as shells, are not listed. Herdr only lists
+  panes running an agent.
 - The state icon appears at the end of the row, not the start. Herdr indents
   the first line of an entry differently from following lines, so a leading
   icon cannot align between the first tab of a workspace and the rest.

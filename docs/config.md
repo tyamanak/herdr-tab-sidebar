@@ -56,7 +56,9 @@ nothing before `apply` and nothing after `release`.
 ## When the release does not finish
 
 Step 2 of [Uninstall](../README.md#uninstall) waits for the newest `status`
-entry to end with `state: released`.
+entry to end with `state: released`. `invoke` returns before the action
+finishes, so if there is no new `status` entry yet, wait a moment and read the
+log again.
 
 If the `release` entry failed, its error explains why; resolve the issue and
 release again. `status` will not report `released` until Herdr reloads

@@ -25,35 +25,30 @@ herdr plugin install tyamanak/herdr-tab-sidebar
 herdr plugin action invoke tyamanak.tab-sidebar.apply
 ```
 
-インストールしただけでは画面に変化はありません。`apply` が行レイアウトを `config.toml` に追加し、設定を再読み込みして行の内容を表示します。
+`config.toml` が書き換わり、`[ui.sidebar.agents]` が追加されます。
 
-`config.toml` を手作業で編集する必要はありません。`apply` がファイルの末尾に 8 行追記し、`release` がその 8 行を取り除いて元に戻します。変更のたびに、古いファイルのコピーを残します。
-
-唯一の例外として、`config.toml` にすでに `[ui.sidebar.agents]` が定義されている場合、`apply` は拒否して何も変更しません。自分の定義を削除するかコメントアウトしてから `apply` を実行してください。[変更する内容](docs/config.ja.md#変更する内容)を参照してください。
+もしすでに `[ui.sidebar.agents]` が定義されている場合は何も変更されません。自分の定義を削除するかコメントアウトしてから `apply` を実行する、もしくは[変更する内容](docs/config.ja.md#変更する内容)を参照してください。
 
 ## アンインストール
 
-まず解除し、解除を確認できてからアンインストールしてください。アクションはバックグラウンドで動き、`invoke` はアクションが終わる前に戻ります。そのため、以下は 3 つの別々の手順であり、まとめて貼り付ける 1 つのブロックではありません。
+以下の手順を順に実行してください。
 
-1. 解除します。
+1. 本プラグインの解除
 
    ```sh
    herdr plugin action invoke tyamanak.tab-sidebar.release
    ```
 
-2. 状態を問い合わせ、少し待ってからログで結果を確認します。
+2. 状態の確認
 
    ```sh
    herdr plugin action invoke tyamanak.tab-sidebar.status
-   ```
-
-   ```sh
    herdr plugin log list --plugin tyamanak.tab-sidebar
    ```
 
-   最新の `status` のエントリーが `state: released` で終わっていれば、次へ進みます。そうならない場合は、[解除が終わらないとき](docs/config.ja.md#解除が終わらないとき)を参照してください。
+   最新の `status` のエントリーが `state: released` で終わっているのを確認して次へ進んでください。もし `released` にならない場合は、[解除が終わらないとき](docs/config.ja.md#解除が終わらないとき)を参照してください。
 
-3. アンインストールします。
+3. アンインストール
 
    ```sh
    herdr plugin uninstall tyamanak.tab-sidebar
@@ -63,7 +58,7 @@ herdr plugin action invoke tyamanak.tab-sidebar.apply
 
 ## 制限
 
-- エージェントのいないタブには行がありません。Herdr が一覧に表示するのは、エージェントが動いているペインのみです。
+- シェルなど、エージェントのいないタブは一覧に表示されません。
 - 複数のエージェントがいるタブのほかのエージェントには、プラグインの適用中、次/前のエージェントへの移動ではたどり着けません。
 - 適用中は、プラグインが Herdr 自身による Agents パネルの並び順と、Herdr の Agent ビューを置き換えます。ビューを設定する別のプラグインとの併用は試していません。
 
