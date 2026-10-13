@@ -26,10 +26,10 @@ rows = [
   (`~/.local/state/herdr/plugins/tyamanak.tab-sidebar/backups/`, or under
   `$XDG_STATE_HOME`). Every change adds a copy; none is overwritten.
 - If `config.toml` already defines `[ui.sidebar.agents]` in any form, `apply`
-  refuses and changes nothing. The two layouts cannot both be active: remove
-  or comment out yours, then run `apply`. To restore parts of your layout
+  refuses and changes nothing. Remove or comment out yours, then run `apply`.
+  The two layouts cannot both be active. To restore parts of your layout
   (such as a custom token in the second row), edit the lines inside the
-  block. These edits remain until the next `apply`, which resets the block;
+  block. These edits remain until the next `apply`, which resets the block.
   `release` removes the entire block.
 - If `config.toml` is a symlink (such as a dotfiles repository), the target
   file is updated and the link remains intact. If the file cannot be written
@@ -37,7 +37,7 @@ rows = [
 - If `config.toml` changes while `apply` or `release` is running (such as from
   an editor save or another tool), the action writes nothing and says so.
   Run it again.
-- The two marker lines must stay as they are: each on its own line, exactly
+- Leave the two marker lines as they are: each on its own line, exactly
   one of each, with the opening line first. If either is missing, duplicated,
   or moved, both `apply` and `release` refuse and change nothing, and
   `status` reports damaged markers. See
@@ -45,8 +45,8 @@ rows = [
 - If a later step of an initial `apply` fails, it attempts to roll back the
   block, view, and tokens it wrote, then reports the failure. If it cannot
   roll everything back (for example, if Herdr stops responding), the error
-  lists what remains. `status` shows the state, and
-  [Removing it by hand](#removing-it-by-hand) explains how to remove the rest.
+  lists what remains. Check the state with `status`, and remove the rest as
+  described in [Removing it by hand](#removing-it-by-hand).
 
 **The Agents panel.** While applied, the plugin manages Herdr's Agent view
 (the panel header shows `tabs`) and sets six display-only tokens named `ts_*`
@@ -64,24 +64,33 @@ If the `release` entry failed, its error explains why; resolve the issue and
 release again. `status` will not report `released` until Herdr reloads
 `config.toml` after the block is removed; releasing again retries the reload.
 
-In rare cases, an `apply` that fails after such a failed reload can cause
-`status` to report `released` while the old layout remains on screen (every
-row of the Agents panel shows only a state icon). If that happens, run
-`herdr server reload-config` to refresh Herdr's in-memory configuration.
+If `status` reports `released` while the old layout remains on screen (every
+row of the Agents panel shows only a state icon), run
+`herdr server reload-config` to refresh Herdr's in-memory configuration. In
+rare cases, an `apply` that fails after the reload of a release has failed can
+cause this.
 
 ## Removing it by hand
 
 For the cases where `release` cannot do it: the plugin was uninstalled first,
 the markers are damaged, or a failed `apply` could not roll everything back.
 
-1. In `config.toml`, delete the plugin's lines: from the
-   `# >>> herdr-tab-sidebar` marker to the `# <<< herdr-tab-sidebar <<<`
-   marker, both included. If a marker is missing or duplicated, delete every
-   marker line and the `[ui.sidebar.agents]` table shown under
-   [What it changes](#what-it-changes), leaving your own lines intact.
-2. Run `herdr server reload-config`. Until then, every row of the Agents panel
+1. Delete the plugin's lines
+
+   In `config.toml`, delete from the `# >>> herdr-tab-sidebar` marker to the
+   `# <<< herdr-tab-sidebar <<<` marker, both included. If a marker is missing
+   or duplicated, delete every marker line and the `[ui.sidebar.agents]` table
+   shown under [What it changes](#what-it-changes), leaving your own lines
+   intact.
+
+2. Reload the config
+
+   Run `herdr server reload-config`. Until then, every row of the Agents panel
    may show only a state icon.
-3. If the plugin is still installed, run `release` once more to remove the
+
+3. Release once more
+
+   If the plugin is still installed, run `release` once more to remove the
    view and its flag, then verify with `status`.
 
 Any `ts_*` tokens still on the panes are display-only; nothing renders them

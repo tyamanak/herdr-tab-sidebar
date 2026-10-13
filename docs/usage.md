@@ -27,10 +27,10 @@ herdr plugin action invoke tyamanak.tab-sidebar.status
 herdr plugin log list --plugin tyamanak.tab-sidebar
 ```
 
-The last line printed by the `status` action is `state: applied`,
-`state: released`, or whatever is blocking either. Because actions run in the
-background, their output and errors appear in the plugin log, not in the
-terminal that invoked them.
+Look at the last line of the newest `status` entry in the log. It is
+`state: applied`, `state: released`, or whatever is blocking either. Because
+actions run in the background, their output and errors appear in the plugin
+log, not in the terminal that invoked them.
 
 From a clone of this repository, you can run the same check with a single
 command and an exit code:
@@ -54,8 +54,8 @@ Both commands are read-only.
 
 The list updates automatically as the session changes (workspaces renamed;
 tabs created, closed, renamed, or moved; panes closed or moved; agents
-detected and their state changes) and comes back after a server restart. Use
-`resync` if it ever looks stale.
+detected and their state changes) and comes back after a server restart. If it
+still looks stale, run `resync`.
 
 ## Update
 
@@ -69,17 +69,17 @@ herdr plugin install tyamanak/herdr-tab-sidebar
 
 - Tabs without an agent, such as shells, are not listed. Herdr only lists
   panes running an agent.
-- The state icon appears at the end of the row, not the start. Herdr indents
-  the first line of an entry differently from following lines, so a leading
-  icon cannot align between the first tab of a workspace and the rest.
+- The state icon appears at the end of the row. Herdr indents the first line
+  of an entry differently from following lines, so a leading icon cannot align
+  between the first tab of a workspace and the rest.
 - While applied, the plugin replaces Herdr's own ordering of the Agents panel
   (`agent_panel_sort`). `release` restores it.
 - Herdr has only one Agent view. The plugin sets it on every run, overwriting
   any view from another plugin, and another plugin setting the view will
   overwrite this one. Using it alongside such a plugin has not been tried.
 - Agents on another machine (Herdr can show several machines in one client)
-  keep a row after the local groups, but it only shows the machine name and
-  the state icon. The row layout is one definition for every row, and the
+  are listed after the local groups, but only with the machine name and the
+  state icon. The row layout is one definition for every row, and the
   plugin's tokens exist only on local panes. This is based on the code and
   unit tests; it has not been checked on a real remote connection. If you work
   that way most of the time, run `release` first.

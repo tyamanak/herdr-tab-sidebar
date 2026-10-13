@@ -14,7 +14,7 @@ The picture is a made-up session drawn by `demo/run.py --svg`; see
 - Workspaces follow the order of the Spaces panel (your own order), and tabs
   follow the order of the tab bar.
 - A tab with several agents is one row. `+1` counts the agents without their
-  own row, and a trailing `!` means one of them is blocked or done.
+  own row. A trailing `!` means one of them is blocked or done.
 - Selecting a row focuses that tab's representative pane.
 
 ## Requirements
